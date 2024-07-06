@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'utils.dart';
 
-class First extends StatelessWidget {
-  final VoidCallback incrementIndex;
+class BeginPage extends StatelessWidget {
+  final VoidCallback moveForward;
 
   void loadSchedule() {
     // TODO: add functionality
   }
 
-  const First({super.key, required this.incrementIndex});
+  const BeginPage({super.key, required this.moveForward});
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context).colorScheme;
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'Mandatory Plaything'),
-
+      theme: ThemeData(fontFamily: 'Mandatory Plaything', colorScheme: Theme.of(context).colorScheme),
       home: Scaffold(
-        backgroundColor: const Color.fromARGB(0, 255, 255, 0),
+        backgroundColor: colors.primary,
         body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -32,11 +32,11 @@ class First extends StatelessWidget {
                 const SizedBox(height: 30),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[900],
-                    foregroundColor: Colors.green
+                    // backgroundColor: Colors.grey[900],
+                    // foregroundColor: Colors.green
                   ),
                   onPressed: () {
-                    incrementIndex();
+                    moveForward();
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(20.0),
@@ -44,7 +44,7 @@ class First extends StatelessWidget {
                       'BEGIN',
                       style: TextStyle(
                         fontSize: 50,
-                        color: Colors.white,
+                        // color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -53,22 +53,22 @@ class First extends StatelessWidget {
                 const SizedBox(height: 30),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[900],
-                    overlayColor: Colors.blue
+                    // backgroundColor: Colors.grey[900],
+                    // overlayColor: Colors.blue
                   ),
                   onPressed: () => loadSchedule(), 
                   child: Text(
                     "Load/Open Schedule",
                     style: const TextStyle(
                         fontSize: 30,
-                        color: Colors.white,
+                        // color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     )
                   ),
                 SizedBox(height: 20),
                 const Text(
-                  'Rishabh R., FRC 6672',
+                  'Rishabh R, FRC 6672',
                   style: TextStyle(
                     fontSize: 20,
                   ),

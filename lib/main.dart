@@ -1,5 +1,5 @@
-import 'package:cypher/first.dart';
-import 'package:cypher/second.dart';
+import 'package:cypher/begin.dart';
+import 'package:cypher/pregame.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Scouting App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        textTheme: Typography.material2021().englishLike,
         useMaterial3: true,
         fontFamily: 'Mandatory Plaything',
       ),
@@ -34,56 +35,73 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
+  late int _selectedPageIndex;
+  late List<Widget> _pages;
+  late PageController _pageController;
 
-  void incrementIndex() {
-    setState(() => selectedIndex++);
+  void moveForward() {
+    _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut).whenComplete(() {
+      setState(() => _selectedPageIndex = _pageController.page!.round());
+    });
   }
 
-  void decrementIndex() {
-    setState(() => selectedIndex--);
+  void moveBackward() {
+    _pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut).whenComplete(() {
+      setState(() => _selectedPageIndex = _pageController.page!.round());
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedPageIndex = 0;
+    _pages = [
+      BeginPage(moveForward: () => moveForward()),
+      PregamePage(incrementIndex: moveForward, decrementIndex: moveBackward),
+      const Placeholder(child: Text('AUTONOMOUS')),
+      const Placeholder(child: Text('TELEOPERATED')),
+      const Placeholder(child: Text('ENDGAME')),
+      const Placeholder(child: Text('NOTES')),
+      const Placeholder(child: Text('SCAN QR')),
+    ];
+    _pageController = PageController(initialPage: _selectedPageIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget page;
-
-    switch (selectedIndex) {
-      case 0:
-        page = First(incrementIndex: incrementIndex);
-      case 1:
-        page = Second(incrementIndex: incrementIndex);
-      case 2:
-        page = const Placeholder(child: Text('AUTONOMOUS'));
-      case 3:
-        page = const Placeholder(child: Text('TELEOPERATED'));
-      case 4:
-        page = const Placeholder(child: Text('ENDGAME'));
-      case 5:
-        page = const Placeholder(child: Text('NOTES'));
-      case 6:
-        page = const Placeholder(child: Text('SCAN QR'));
-      default:
-        throw UnimplementedError("Page $selectedIndex not assigned");
-    }
-
-
+    var colors = Theme.of(context).colorScheme;
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
           appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+            title: Text(widget.title, style: TextStyle(color: colors.onTertiary)),
+            backgroundColor: colors.tertiary,
           ),
           body: Row(
             children: [
               SafeArea(
                 child: NavigationRail(
-                  extended: constraints.maxWidth >= 400,
+                  extended: constraints.maxWidth >= 1000,
+                  backgroundColor: colors.secondaryContainer,
+                  selectedIndex: _selectedPageIndex,
+                  onDestinationSelected: (selectedPage) =>
+                    _pageController.animateToPage(
+                      selectedPage, 
+                      duration: const Duration(milliseconds: 300), 
+                      curve: Curves.easeInOut)
+                      .whenComplete(() => setState(() {_selectedPageIndex = selectedPage;})),
                   destinations: const [
                     NavigationRailDestination(
                       icon: Icon(Icons.science_outlined), 
-                      label: Text('Start')),
+                      label: Text('Start'),
+                      ),
                     NavigationRailDestination(
                       icon: Icon(Icons.star), 
                       label: Text('Pregame')),
@@ -103,16 +121,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       icon: Icon(Icons.qr_code), 
                       label: Text('QR Code')),
                   ],
-                  selectedIndex: selectedIndex,
-                  onDestinationSelected:(value) => setState(() {
-                    selectedIndex = value;
-                  }),
                 ),
               ),
               Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: page,
+                child: PageView(
+                  controller: _pageController,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: _pages,
                 ),
               ),
             ],

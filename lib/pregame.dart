@@ -2,27 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'utils.dart';
 
-class Second extends StatefulWidget {
+class PregamePage extends StatefulWidget {
   final VoidCallback incrementIndex;
+  final VoidCallback decrementIndex;
 
-  const Second({super.key, required this.incrementIndex});
+  const PregamePage({super.key, required this.incrementIndex, required this.decrementIndex});
 
   @override
-  State<Second> createState() => _SecondState();
+  State<PregamePage> createState() => _PregamePageState();
 }
 
-class _SecondState extends State<Second> {
+class _PregamePageState extends State<PregamePage> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   final _formKey = GlobalKey<FormState>();
   var isPreloaded = false;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'Mandatory Plaything'),
+      theme: ThemeData(fontFamily: 'Mandatory Plaything', colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)),
       home: Form(
         key: _formKey,
         child: Scaffold(
-          backgroundColor: const Color.fromARGB(0, 255, 255, 0),
           body: Center(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -108,6 +113,20 @@ class _SecondState extends State<Second> {
                         }
                       },
                       child: const Text('Next Page'),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 10,
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          widget.decrementIndex();
+                        }
+                      },
+                      child: const Text('Prev Page'),
                     ),
                   ),
                 ],
