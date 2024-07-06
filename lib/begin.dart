@@ -12,11 +12,10 @@ class BeginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var colors = Theme.of(context).colorScheme;
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'Mandatory Plaything', colorScheme: Theme.of(context).colorScheme),
+      // theme: ThemeData(fontFamily: 'Mandatory Plaything', colorScheme: Theme.of(context).colorScheme),
       home: Scaffold(
-        backgroundColor: colors.primary,
+        // backgroundColor: colors.primary,
         body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -24,7 +24,10 @@ class _PregamePageState extends State<PregamePage> with AutomaticKeepAliveClient
     super.build(context);
 
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'Mandatory Plaything', colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)),
+      theme: ThemeData(
+        fontFamily: 'Mandatory Plaything',
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black)),
       home: Form(
         key: _formKey,
         child: Scaffold(
@@ -45,7 +48,7 @@ class _PregamePageState extends State<PregamePage> with AutomaticKeepAliveClient
                             isPreloaded = value!;
                           });
                         },
-                        activeColor: Colors.green,
+                        // activeColor: Colors.green,
                       ),
                     ],
                   ),

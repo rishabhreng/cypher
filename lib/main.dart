@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
       title: 'Scouting App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        textTheme: Typography.material2021().englishLike,
         useMaterial3: true,
         fontFamily: 'Mandatory Plaything',
       ),
@@ -81,22 +80,25 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (context, constraints) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(widget.title, style: TextStyle(color: colors.onTertiary)),
             backgroundColor: colors.tertiary,
+            title: Text(widget.title,
+            style: TextStyle(color: colors.onTertiary)),
           ),
           body: Row(
             children: [
               SafeArea(
                 child: NavigationRail(
                   extended: constraints.maxWidth >= 1000,
-                  backgroundColor: colors.secondaryContainer,
+                  indicatorColor: colors.primary,
+                  backgroundColor: colors.primaryContainer,
                   selectedIndex: _selectedPageIndex,
+                  selectedIconTheme: IconThemeData(color: colors.inversePrimary),
                   onDestinationSelected: (selectedPage) =>
                     _pageController.animateToPage(
                       selectedPage, 
                       duration: const Duration(milliseconds: 300), 
                       curve: Curves.easeInOut)
-                      .whenComplete(() => setState(() {_selectedPageIndex = selectedPage;})),
+                      .whenComplete(() => setState(() => _selectedPageIndex = selectedPage)),
                   destinations: const [
                     NavigationRailDestination(
                       icon: Icon(Icons.science_outlined), 
@@ -131,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ],
-            ),
+          ),
         );
       }
     );
