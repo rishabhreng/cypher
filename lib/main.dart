@@ -1,4 +1,7 @@
+import 'package:cypher/first.dart';
+import 'package:cypher/second.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Mandatory Plaything',
       ),
-      home: const MyHomePage(title: 'Cypher Scouting App'),
+      home: const MyHomePage(title: 'CYPHER (FRC 6672)'),
     );
   }
 }
@@ -33,6 +36,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var selectedIndex = 0;
 
+  void incrementIndex() {
+    setState(() => selectedIndex++);
+  }
+
+  void decrementIndex() {
+    setState(() => selectedIndex--);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     switch (selectedIndex) {
       case 0:
-        page = const Placeholder(child: Text('BEGIN'));
+        page = First(incrementIndex: incrementIndex);
       case 1:
-        page = const Placeholder(child: Text('PREGAME'));
+        page = Second(incrementIndex: incrementIndex);
       case 2:
         page = const Placeholder(child: Text('AUTONOMOUS'));
       case 3:
@@ -78,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       icon: Icon(Icons.star), 
                       label: Text('Pregame')),
                     NavigationRailDestination(
-                      icon: Icon(Icons.reddit), 
+                      icon: Icon(FontAwesomeIcons.robot), 
                       label: Text('Autonomous')),
                     NavigationRailDestination(
                       icon: Icon(Icons.remove_road), 
