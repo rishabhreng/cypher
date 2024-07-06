@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Title extends StatelessWidget {
+class BigTitle extends StatelessWidget {
   final String title;
-  const Title({super.key, required this.title});
+  const BigTitle({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

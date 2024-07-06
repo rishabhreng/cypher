@@ -21,8 +21,7 @@ class First extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Titl
-                Title(title: "CYPHER"),
+                BigTitle(title: "CYPHER"),
                 const Text(
                   'FUSION CORPS',
                   style: TextStyle(
@@ -32,7 +31,6 @@ class First extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
-                  
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[900],
                     foregroundColor: Colors.green
