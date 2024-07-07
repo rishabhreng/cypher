@@ -28,6 +28,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   font_awesome_flutter: ^10.7.0
   http: ^1.2.1
+  csv: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -40,6 +41,7 @@ flutter:
 
   assets:
     - assets/FusionCorpsLogo.png
+    - assets/schedule.csv
 
   fonts:
     - family: Mandatory Plaything

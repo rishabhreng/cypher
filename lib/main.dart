@@ -1,5 +1,6 @@
 import 'package:cypher/begin.dart';
 import 'package:cypher/pregame.dart';
+import 'package:cypher/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -50,20 +51,26 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void movePage(int index) {
+    _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut).whenComplete(() {
+      setState(() => _selectedPageIndex = index);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
     _selectedPageIndex = 0;
     _pages = [
-      BeginPage(moveForward: () => moveForward()),
-      PregamePage(incrementIndex: moveForward, decrementIndex: moveBackward),
+      BeginPage(moveForward: moveForward),
+      PregamePage(moveForward: moveForward, moveBackward: moveBackward),
       const Placeholder(child: Text('AUTONOMOUS')),
       const Placeholder(child: Text('TELEOPERATED')),
       const Placeholder(child: Text('ENDGAME')),
       const Placeholder(child: Text('NOTES')),
       const Placeholder(child: Text('SCAN QR')),
-      const Placeholder(child: Text('Schedule')),
+      SchedulePage(moveBackward: () => movePage(1)),
     ];
     _pageController = PageController(initialPage: _selectedPageIndex);
   }

@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'utils.dart';
 
 class PregamePage extends StatefulWidget {
-  final VoidCallback incrementIndex;
-  final VoidCallback decrementIndex;
+  final VoidCallback moveForward;
+  final VoidCallback moveBackward;
 
-  const PregamePage({super.key, required this.incrementIndex, required this.decrementIndex});
+  const PregamePage({super.key, required this.moveForward, required this.moveBackward});
 
   @override
   State<PregamePage> createState() => _PregamePageState();
@@ -112,7 +112,7 @@ class _PregamePageState extends State<PregamePage> with AutomaticKeepAliveClient
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          widget.incrementIndex();
+                          widget.moveForward();
                         }
                       },
                       child: const Text('Next Page'),
@@ -126,7 +126,7 @@ class _PregamePageState extends State<PregamePage> with AutomaticKeepAliveClient
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          widget.decrementIndex();
+                          widget.moveBackward();
                         }
                       },
                       child: const Text('Prev Page'),
