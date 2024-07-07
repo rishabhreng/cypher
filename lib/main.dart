@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     _selectedPageIndex = 0;
     _pages = [
-      BeginPage(moveForward: moveForward),
+      BeginPage(moveForward: moveForward, gotoSchedulePage: () => movePage(7)),
       PregamePage(moveForward: moveForward, moveBackward: moveBackward),
       const Placeholder(child: Text('AUTONOMOUS')),
       const Placeholder(child: Text('TELEOPERATED')),

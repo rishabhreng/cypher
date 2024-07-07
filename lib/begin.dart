@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 class BeginPage extends StatelessWidget {
   final VoidCallback moveForward;
+  final VoidCallback gotoSchedulePage;
 
   final int eventYear = 2024;
   final String eventCode = "CURIE";
@@ -40,14 +41,14 @@ class BeginPage extends StatelessWidget {
       throw Exception('Failed to load schedule');}
   }
 
-  const BeginPage({super.key, required this.moveForward});
+  const BeginPage({super.key, required this.moveForward, required this.gotoSchedulePage});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // theme: ThemeData(fontFamily: 'Mandatory Plaything', colorScheme: Theme.of(context).colorScheme),
+      theme: ThemeData(fontFamily: 'Mandatory Plaything', colorScheme: Theme.of(context).colorScheme),
       home: Scaffold(
-        // backgroundColor: colors.primary,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -63,8 +64,8 @@ class BeginPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    // backgroundColor: Colors.grey[900],
-                    // foregroundColor: Colors.green
+                    backgroundColor: Colors.grey[900],
+                    foregroundColor: Colors.green
                   ),
                   onPressed: () {
                     moveForward();
@@ -75,7 +76,7 @@ class BeginPage extends StatelessWidget {
                       'BEGIN',
                       style: TextStyle(
                         fontSize: 50,
-                        // color: Colors.white,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -84,15 +85,18 @@ class BeginPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    // backgroundColor: Colors.grey[900],
-                    // overlayColor: Colors.blue
+                    backgroundColor: Colors.grey[900],
+                    overlayColor: Colors.blue
                   ),
-                  onPressed: () => loadSchedule(eventYear: eventYear, eventCode: eventCode), 
+                  onPressed: () {
+                    loadSchedule(eventYear: eventYear, eventCode: eventCode);
+                    gotoSchedulePage();
+                    }, 
                   child: Text(
                     "Load/Open Schedule",
                     style: const TextStyle(
                         fontSize: 30,
-                        // color: Colors.white,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     )

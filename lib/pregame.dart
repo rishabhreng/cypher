@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'utils.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class PregamePage extends StatefulWidget {
   final VoidCallback moveForward;
@@ -24,10 +25,7 @@ class _PregamePageState extends State<PregamePage> with AutomaticKeepAliveClient
     super.build(context);
 
     return MaterialApp(
-      theme: ThemeData(
-        fontFamily: 'Mandatory Plaything',
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black)),
+      theme: ThemeData(fontFamily: 'Mandatory Plaything', colorScheme: Theme.of(context).colorScheme),
       home: Form(
         key: _formKey,
         child: Scaffold(
@@ -48,7 +46,7 @@ class _PregamePageState extends State<PregamePage> with AutomaticKeepAliveClient
                             isPreloaded = value!;
                           });
                         },
-                        // activeColor: Colors.green,
+                        activeColor: Colors.green,
                       ),
                     ],
                   ),
@@ -103,6 +101,10 @@ class _PregamePageState extends State<PregamePage> with AutomaticKeepAliveClient
                             labelText: "Team Number"),
                       ),
                     ],
+                  ),
+                  Center(
+                    // child: FadeInImage.memoryNetwork(placeholder: kTransparentImage, image: 'assets/2024-field_blank.png'),
+                    child: Image(image: AssetImage('assets/2024-field_red.png')),
                   ),
                   Align(
                     alignment: Alignment.bottomRight,
