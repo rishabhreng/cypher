@@ -63,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
       const Placeholder(child: Text('ENDGAME')),
       const Placeholder(child: Text('NOTES')),
       const Placeholder(child: Text('SCAN QR')),
+      const Placeholder(child: Text('Schedule')),
     ];
     _pageController = PageController(initialPage: _selectedPageIndex);
   }
@@ -122,6 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     NavigationRailDestination(
                       icon: Icon(Icons.qr_code), 
                       label: Text('QR Code')),
+                  NavigationRailDestination(
+                      icon: Icon(Icons.calendar_today_rounded), 
+                      label: Text('Schedule')),
                   ],
                 ),
               ),
