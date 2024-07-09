@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:csv/csv.dart';
 
 import 'package:flutter/material.dart';
 import 'utils.dart';
@@ -12,13 +13,13 @@ class BeginPage extends StatelessWidget {
   final int eventYear = 2024;
   final String eventCode = "CURIE";
 
-  void loadSchedule({int eventYear = 2024, String eventCode="CURIE"}) async {
+  void loadScheduleAndTeamList({int eventYear = 2024, String eventCode="CURIE"}) async {
     const credentials = "thepianoman:40e1597d-89f6-4dc1-9c90-3359b87ea809";
     final encodedCredentials = utf8.fuse(base64).encode(credentials);
-    final matchUrl = "https://frc-api.firstinspires.org/v3.0/$eventYear/schedule/$eventCode?tournamentLevel=Qualification";
-    
-    final response = await http
-      .get(Uri.parse(matchUrl), 
+    final scheduleURL = "https://frc-api.firstinspires.org/v3.0/$eventYear/schedule/$eventCode?tournamentLevel=Qualification";
+    final teamListURL = "https://frc-api.firstinspires.org/v3.0/$eventYear/teams";
+    var response = await http
+      .get(Uri.parse(scheduleURL), 
             headers: {HttpHeaders.authorizationHeader: "Basic $encodedCredentials"});
 
     if (response.statusCode == 200) {
@@ -39,6 +40,33 @@ class BeginPage extends StatelessWidget {
       await f.writeAsString(csv.trim());
     } else {
       throw Exception('Failed to load schedule');}
+
+    int numOfPagesInTeamList = 10;
+
+    File f = File('assets/teamList.csv');
+    for (var i = 1; i < numOfPagesInTeamList; i++) {
+      var response = await http
+        .get(Uri.parse("$teamListURL?page=$i"), 
+            headers: {HttpHeaders.authorizationHeader: "Basic $encodedCredentials"});
+      
+      if (response.statusCode == 200) {
+        String csv = i==1 ? 'Team Number,Team Name\n' : '';
+        if (i == 1) numOfPagesInTeamList = (jsonDecode(response.body) as Map<String, dynamic>)['pageTotal'];
+        var decodedTeams = (jsonDecode(response.body) as Map<String, dynamic>)['teams'];
+        for (var i = 0; i < decodedTeams.length; i++) {
+          var team = decodedTeams[i];
+          csv += '${team['teamNumber']},"${team['nameShort']}"\n';
+        }
+
+        if (i == 1) {
+          await f.writeAsString(csv);
+        } else {
+        await f.writeAsString(csv, mode: FileMode.append);
+        }
+      } else {
+        throw Exception('Failed to load team list');
+      }
+    }
   }
 
   const BeginPage({super.key, required this.moveForward, required this.gotoSchedulePage});
@@ -89,7 +117,7 @@ class BeginPage extends StatelessWidget {
                     overlayColor: Colors.blue
                   ),
                   onPressed: () {
-                    loadSchedule(eventYear: eventYear, eventCode: eventCode);
+                    loadScheduleAndTeamList(eventYear: eventYear, eventCode: eventCode);
                     gotoSchedulePage();
                     }, 
                   child: Text(

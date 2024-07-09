@@ -3,9 +3,8 @@ import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
 
 class SchedulePage extends StatefulWidget {
-  final VoidCallback moveBackward;
 
-  const SchedulePage({super.key, required this.moveBackward});
+  const SchedulePage({super.key});
 
   @override
   State<SchedulePage> createState() => _SchedulePageState();
@@ -54,16 +53,6 @@ class _SchedulePageState extends State<SchedulePage> with AutomaticKeepAliveClie
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Mandatory Plaything', colorScheme: Theme.of(context).colorScheme),
       home: Scaffold(
-        floatingActionButton: SizedBox(
-          height: 50,
-          width: 150,
-          child: FloatingActionButton(
-            isExtended: true,
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            onPressed: () => widget.moveBackward(),
-            child: Text('Back to Pregame'),
-          ),
-        ),
         body: Row(
           children: [
             Expanded(

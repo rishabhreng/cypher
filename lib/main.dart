@@ -1,5 +1,6 @@
 import 'package:cypher/begin.dart';
 import 'package:cypher/pregame.dart';
+import 'package:cypher/qr.dart';
 import 'package:cypher/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -69,8 +70,11 @@ class _MyHomePageState extends State<MyHomePage> {
       const Placeholder(child: Text('TELEOPERATED')),
       const Placeholder(child: Text('ENDGAME')),
       const Placeholder(child: Text('NOTES')),
-      const Placeholder(child: Text('SCAN QR')),
-      SchedulePage(moveBackward: () => movePage(1)),
+      QRPage(moveBackward: moveBackward, resetAll: () {
+        movePage(0);
+        setState(() {});
+      },),
+      SchedulePage(),
     ];
     _pageController = PageController(initialPage: _selectedPageIndex);
   }

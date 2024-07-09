@@ -30,6 +30,7 @@ dependencies:
   http: ^1.2.1
   csv: ^6.0.0
   transparent_image: ^2.0.1
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -44,6 +45,7 @@ flutter:
     - assets/2024-field_blank.png
     - assets/FusionCorpsLogo.png
     - assets/schedule.csv
+    - assets/teamList.csv
     - assets/2024-field-red.png
     - assets/2024-field-blue.png
 
